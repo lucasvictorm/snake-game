@@ -77,21 +77,40 @@ function changeDirection(key){
     console.log(key)
     switch(key.key){
         case "w" || "W":
-            velocityY = -1;
-            velocityX = 0;
-            break;
+            if(velocityY == 1){
+                break;
+            }else{
+                velocityY = -1;
+                velocityX = 0;
+                break;
+            }
+            
         case "d" || "D":
-            velocityY = 0;
-            velocityX = 1;
-            break;
+            if(velocityX == -1){
+                break;
+            }else{
+                velocityY = 0;
+                velocityX = 1;
+                break;
+            }
+            
         case "s" || "S":
-            velocityY = 1;
-            velocityX = 0;
-            break;
+            if(velocityY == -1){
+                break;
+            }else{
+                velocityY = 1;
+                velocityX = 0;
+                break;
+            }
+            
         case "a" || "A":
-            velocityY = 0;
-            velocityX = -1;
-            break;
+            if(velocityX == 1){
+                break;
+            }else{
+                velocityY = 0;
+                velocityX = -1;
+                break;
+            }
         
     }
 }
