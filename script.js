@@ -9,6 +9,9 @@ let snake = [
     [75, 225],
     [50, 225]
 ];
+let velocityX = 1 
+let velocityY = 0;
+let anima;
 
 window.onload = () =>{
     quadro = document.getElementById("quadro")
@@ -18,20 +21,23 @@ window.onload = () =>{
     ctx.fillStyle = "black";
     ctx.fillRect(0, 0, 500, 500);
     
-    snake.push()
-    console.log(snake)
+
     placeFood();
     drawSnake();
     document.addEventListener("keyup", changeDirection);
     //update()
-    //setInterval(update, 1000/10)
+    //setInterval(update, 100)
+    
 }
 
 function update(){
+
     ctx.fillStyle = "black";
     ctx.fillRect(0, 0, 500, 500);
     
-    
+    if(snakeX == foodX && snakeY == foodY){
+        snake.push([foodX, foodY])
+    }
     
     ctx.fillStyle = "red";
     ctx.fillRect(foodX, foodY, blockSize, blockSize)
@@ -40,7 +46,6 @@ function update(){
     snake[0] = [snakeX, snakeY];
     snakeX += velocityX * blockSize;
     snakeY += velocityY * blockSize;
-    console.log(snake)
     
     drawSnake();
 }
@@ -68,10 +73,24 @@ function moveSnake(){
 }
 
 function changeDirection(key){
-    //console.log(key)
-    switch(key){
+    console.log(key)
+    switch(key.key){
         case "w" || "W":
-
+            velocityY = -1;
+            velocityX = 0;
+            break;
+        case "d" || "D":
+            velocityY = 0;
+            velocityX = 1;
+            break;
+        case "s" || "S":
+            velocityY = 1;
+            velocityX = 0;
+            break;
+        case "a" || "A":
+            velocityY = 0;
+            velocityX = -1;
+            break;
         
     }
 }
