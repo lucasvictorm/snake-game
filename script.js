@@ -37,6 +37,7 @@ function update(){
     
     if(snakeX == foodX && snakeY == foodY){
         snake.push([foodX, foodY])
+        placeFood();
     }
     
     ctx.fillStyle = "red";
