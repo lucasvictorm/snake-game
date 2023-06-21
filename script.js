@@ -12,10 +12,13 @@ let snake = [
 let velocityX = 1 
 let velocityY = 0;
 let anima;
+let gameOn;
+let gameOver = false;
 
 window.onload = () =>{
     quadro = document.getElementById("quadro")
     quadro.width = blockSize * cols;
+    console.log(quadro.width)
     quadro.height = blockSize * rows;
     ctx = quadro.getContext("2d");
     ctx.fillStyle = "black";
@@ -26,12 +29,14 @@ window.onload = () =>{
     drawSnake();
     document.addEventListener("keyup", changeDirection);
     //update()
-    //setInterval(update, 100)
+    gameOn = setInterval(update, 100);
     
 }
 
 function update(){
-
+    if(gameOver){
+        return;
+    }
     ctx.fillStyle = "black";
     ctx.fillRect(0, 0, 500, 500);
     
@@ -47,17 +52,19 @@ function update(){
     snake[0] = [snakeX, snakeY];
     snakeX += velocityX * blockSize;
     snakeY += velocityY * blockSize;
-    
+    verifyGameOver()
     drawSnake();
+    
 }
 
 function placeFood(){
-     foodX = Math.floor(Math.random() * cols)* blockSize;
+    foodX = Math.floor(Math.random() * cols)* blockSize;
     foodY = Math.floor(Math.random() * rows) * blockSize;
     
 }
 
 function drawSnake(){
+    
     ctx.fillStyle="green";
     ctx.fillRect(snakeX, snakeY, blockSize, blockSize)
     for(let i = 0;i < snake.length;i++){
@@ -74,7 +81,6 @@ function moveSnake(){
 }
 
 function changeDirection(key){
-    console.log(key)
     switch(key.key){
         case "w" || "W":
             if(velocityY == 1){
@@ -113,4 +119,35 @@ function changeDirection(key){
             }
         
     }
+}
+
+function verifyGameOver(){
+    let newpartX;
+    let newpartY;
+    if(snakeX < 0){
+        newpartX = snake[snake.length - 1][0] + blockSize;
+        newpartY = snake[snake.length - 1][1];
+        gameOver = true;
+    }else if(snakeX >= cols*blockSize){
+        newpartX = snake[snake.length - 1][0] - blockSize;
+        newpartY = snake[snake.length - 1][1];
+        gameOver = true;
+    }else if(snakeY < 0){
+        newpartX = snake[snake.length - 1][0];
+        newpartY = snake[snake.length - 1][1] + blockSize;
+        gameOver = true;
+    }else if(snakeY >= rows*blockSize){
+        newpartX = snake[snake.length - 1][0];
+        newpartY = snake[snake.length - 1][1] - blockSize;
+        gameOver = true;
+    }
+    if(gameOver){
+        snake.push([newpartX,  newpartY]);
+    }
+    snake.forEach((body) =>{
+            if(body[0] == snakeX && body[1] == snakeY){
+                clearInterval(gameOn);
+            }
+        })
+    
 }
