@@ -18,23 +18,33 @@ let gameOver = false;
 window.onload = () =>{
     quadro = document.getElementById("quadro")
     quadro.width = blockSize * cols;
-    console.log(quadro.width)
     quadro.height = blockSize * rows;
     ctx = quadro.getContext("2d");
     ctx.fillStyle = "black";
     ctx.fillRect(0, 0, 500, 500);
     
+}
 
+function start(){
+    clearInterval(gameOn);
+    gameOver = false;
+    snakeX = 100;
+    snakeY = 225;
+    snake = [
+        [75, 225],
+        [50, 225]
+    ];
     placeFood();
     drawSnake();
     document.addEventListener("keyup", changeDirection);
     //update()
     gameOn = setInterval(update, 100);
-    
 }
 
 function update(){
     if(gameOver){
+        showGameOver();
+        clearInterval(gameOn);
         return;
     }
     ctx.fillStyle = "black";
@@ -146,8 +156,14 @@ function verifyGameOver(){
     }
     snake.forEach((body) =>{
             if(body[0] == snakeX && body[1] == snakeY){
-                clearInterval(gameOn);
+                gameOver = true;
             }
         })
-    
+}
+
+function showGameOver(){
+    ctx.font = "2em Arial";
+    ctx.fillStyle="white";
+    ctx.textAlign="center"
+    ctx.fillText("GAME OVER", quadro.width / 2, quadro.height / 2)
 }
