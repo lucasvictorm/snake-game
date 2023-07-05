@@ -28,6 +28,8 @@ window.onload = () =>{
 function start(){
     clearInterval(gameOn);
     gameOver = false;
+    velocityY = 0;
+    velocityX = 1;
     snakeX = 100;
     snakeY = 225;
     snake = [
